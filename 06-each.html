@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function each(arr,callback){
+        for(var i=0;i<arr.length;i++){
+            if(false==callback.call(arr[i],arr[i],i)){
+                break;
+            }
+        }
+    }
+    var arr=[1,3,4,4,2,3,4];
+    each(arr, function (v, i) {
+        if(v==4){
+            console.log(i);
+            return false;
+        }
+    })
+</script>
+</body>
+</html>

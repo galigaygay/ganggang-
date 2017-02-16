@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    if(!Function.prototype.bind){
+        Function.prototype.bind= function (oThis) {
+            if (typeof this !== 'function') {
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+            var aArgs = Array.prototype.slice.call(arguments, 1);
+            return function () {
+                var ret;
+                var args = Array.prototype.slice.call(arguments);
+                ret = fn.apply(oThis, aArgs.concat(args));
+                return ret;
+            }
+        }
+    }
+    var fn= function (a, b, c, d) {
+        console.log(this);
+        console.log(a);
+        console.log(b);
+        console.log(c);
+        console.log(d);
+    }
+    var foo=fn.bind(null,1,2);
+    foo();
+     //返回一个函数  暂时不执行
+    console.log(foo(3, 4));     //可以传
+// return function () {
+ //   var ret;
+//    var args = Array.prototype.slice.call(arguments);
+//    ret = fn.apply(oThis, aArgs.concat(args));
+//    return ret;
+//    }     //foo();
+
+//    var f=new fn();
+//    f.fn=foo;
+//    f.fn();
+
+</script>
+</body>
+</html>

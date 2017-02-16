@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var arr=[1,2,3,1,4,5];
+    function each(arr,callback){
+        for(var i=0;i<arr.length;i++){
+            if(callback.call(arr[i],arr[i],i)===false){
+                break;
+            }
+            //改变this指向
+        }
+    }
+    each(arr, function (v, i) {
+        if(v===1){
+            console.log(i);
+            return false;
+        }
+    })
+
+</script>
+</body>
+</html>

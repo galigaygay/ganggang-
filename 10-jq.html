@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-1.11.1.js"></script>
+</head>
+<body>
+<div></div>
+<script>
+   var jq= $('div');
+   console.log(jq);
+
+   if('a' in window){
+       var a=10;
+
+   } else{
+       var a=20;
+   }
+   console.log(a);//10   'a' 一开始值为undefined，undefined为window的一个属性  所以 值为10
+
+
+    var a=100;
+    if(a in window){
+        var a=10;
+    }else{
+        var a=20;
+    }
+   console.log(a); //20   定义 全局变量  a=100   走else
+
+
+
+   var a;
+   if(a in window){
+       var a=10;
+   }else{
+       var a=20;
+   }
+   console.log(a);  //a 一开始值为undefined，undefined为window的一个属性  所以 值为10
+
+
+
+
+</script>
+</body>
+</html>

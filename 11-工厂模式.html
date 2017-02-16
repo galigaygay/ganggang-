@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //创建对象时，不直接使用构造函数或者直面量方式来创建
+    //通过一个函数，来创建，那只需要传入该对象的相关属性
+    //基本工厂函数     vxcx
+    function createPerson(){
+        var obj={};
+        obj.name=name;
+        obj.age=age;
+        return obj;
+    }
+
+    //扩展写法
+//    function Person(name,age){
+//        this.name=name;
+//        this.age=age;
+//    }
+//    function createPerson(name,age){
+//        return new Person(name,age);
+//    }
+
+    function createPerson(name,age){
+        return new createPerson.prototype.Person(name,age);
+    }
+    createPerson.prototype.Person= function (name, age) {
+          this.name=name;
+          this.age=age;
+    }
+    var zs = createPerson('战三', 18);
+    console.log(zs);
+
+    var ls = new createPerson('李四', 19);
+    console.log(ls);
+
+
+
+
+</script>
+</body>
+</html>

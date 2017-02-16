@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>select</title>
+    <script src="jquery-1.11.1.js"></script>
+</head>
+<body>
+<div id="dv"></div>
+<p id="pp">
+    <span class="sp">123</span>
+</p>
+
+<p id="sp">
+    <span class="sp">456</span>
+</p>
+<span class="sp"></span>
+<script>
+    var doms = document.querySelectorAll('#dv');
+    doms = document.querySelectorAll('p');
+    doms = document.querySelectorAll('.sp')
+    doms = document.querySelectorAll('#dv,p,.sp');
+    console.log(doms);
+
+    //选择器引擎函数  select
+    function select(selector, context) {
+        var ret = [];
+        var doms;
+        var els = [];
+        var i;
+
+        //如果context不为 undefined ，null
+        //如果context为 单个dom元素
+        if (context.nodeType && context.nodeType == 1) {
+            doms = context.querySelectorAll(selector);
+            ret = Array.prototype.slice.call(doms);//借调
+        }
+        //如果context类型为dom数组或者伪数组对象
+        else if (typeof context === 'object' && (context instanceof  Array || 'length' in context)) {
+            for (i = 0; i < context.length; i++) {
+                doms = context[i].querySelectorAll(selector);
+                for (var j = 0; j < doms.length; j++) {
+                    ret.push(doms[j]);
+                }
+            }
+        } else {
+            selector = context + ' ' + selector;
+            doms = document.querySelectorAll(selector);
+            ret = Array.prototype.slice.call(doms);
+        }
+        return ret;
+    }
+
+//    console.log(select('#dv,p,.sp'));
+        doms=select('.sp',document.getElementById('pp'));
+        console.log(doms);
+
+</script>
+</body>
+</html>

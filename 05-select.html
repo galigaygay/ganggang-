@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="dv">
+    <p id="p1">dp</p>
+</div>
+<p id="p2">1</p>
+<p id="p3">2</p>
+<div><p id="p4">2</p></div>
+<script>
+    function select(selector,context){
+        var ret=[];
+        if(context){
+          if(context.nodeType===1){
+              return Array.prototype.slice.call(context.querySelectorAll(selector));
+          }
+          //context 是 dom数组或者  伪数组
+          else if(context instanceof Array||(typeof context === 'object'&&'length' in context)){
+             for(var i=0;i<context.length;i++){
+                 var doms=context[i].querySelectorAll(selector);
+                 for(var j=0;j<doms.length;j++){
+                     ret.push(doms[j]);
+                 }
+             }
+          }
+            else{
+              return Array.prototype.slice.call(document.querySelectorAll(context+' '+selector));
+          }
+            return ret;
+        }
+        else{
+            //只有第一个参数    第二个参数为空      没有context  确定范围
+           return Array.prototype.slice.call(document.querySelectorAll(selector));
+        }
+    }
+    console.log(select('p', null));
+
+    //
+    function select(selector, context) {
+        // 存储所有获取到的dom元素
+        var ret = [],
+                doms;
+
+        var i = 0,
+                l;
+        // 判断是否指定了context
+        if (context) {
+            // context 是 dom对象
+            // 使用context调用querySelectorAll 获取dom元素
+            // 将其转换成真数组返回
+            if (context.nodeType === 1) {
+                doms = context.querySelectorAll(selector);
+                try {
+                    ret = Array.prototype.slice.call(doms);
+                } catch(e){
+                    l = doms.length;
+                    for(i = 0; i < l; i++){
+                        ret.push(doms[i]);
+                    }
+                }
+            }
+            // context 是 dom数组或伪数组
+            // 遍历context，使用当前遍历到的元素调用querySelectorAll 获取dom元素
+            // 得到结果doms，要将其所有dom元素 追加到 ret数组内，
+            else if (context instanceof Array ||
+                    (typeof context === 'object' && 'length' in context)) {
+                for (var i = 0, l = context.length; i < l; i++) {
+                    var doms = context[i].querySelectorAll(selector);
+                    for (var j = 0, k = doms.length; j < k; j++) {
+                        ret.push(doms[j]);
+                    }
+                }
+            }
+            // context 为 字符串即选择器
+            else {
+                doms = document.querySelectorAll(context + ' ' + selector);
+                try {
+                    ret =  Array.prototype.slice.call(doms);
+                } catch(e){
+                    l = doms.length;
+                    for(i = 0; i < l; i++){
+                        ret.push(doms[i]);
+                    }
+                }
+            }
+        }
+        // 如果context没有传入实参
+        // 通过document调用querySelectorAll来直接获取dom元素
+        else {
+            doms = document.querySelectorAll(selector);
+            try {
+                ret = Array.prototype.slice.call(doms);
+            } catch(e){
+                l = doms.length;
+                for(i = 0; i < l; i++){
+                    ret.push(doms[i]);
+                }
+            }
+        }
+        return ret;
+    }
+
+
+
+
+</script>
+</body>
+</html>

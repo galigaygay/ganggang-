@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //在开发框架时，为了防止变量以及全局对象的污染，使用沙箱模式
+    //沙箱模式：代码自执行 分割作用域
+    //将常用的全局对象，通过参数传递到沙箱内。
+    //好处：1.在一定程度上提高变量的搜索性能  2.有利于代码压缩
+//    (function (global){
+//        //独立的作用域，与外界隔离
+//    }(window));
+//    var fn=function(){
+//
+//    }
+//    (fn(window));
+    (function (global){
+        var init;
+        var itcast= function (selector, context) {
+            return new itcast.prototype.init(selector,context);
+        }
+
+        //fn 是用来替换prototype 属性的
+
+        itcast.fn=itcast.prototype={
+            constructor:itcast
+        };
+        //将构造函数init放到itcast函数上。 为了和itcast建立关联
+        //同时让init变量 也引用该构造函数 为了方便使用
+        init =itcast.fn.init= function (selector, context) {};
+        //为了用户在框架外部实现扩展方法
+        //在框架外部 用户只能拿到itcast函数 以及他的原型
+        //所以用户在操作dom方法时，只能向原型上扩展
+        //让init对象继承自itcast.prototype
+        init.prototype=itcast.fn;
+
+
+//        init.prototype.addClass= function (className) {}
+
+
+        //操作dom   添加方法
+        //将itcast函数 暴露在全局上
+        ///加载框架代码   可以使用$  就是itcast
+        global.$=global.itcast=itcast;
+    }(window))
+
+    $.fn.css= function (name, value) {
+        console.log('css');
+    }
+
+    var i=$();
+//    i.addClass();
+    i.css();
+</script>
+</body>
+</html>

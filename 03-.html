@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="dv"></div>
+<p id="pp">
+    <span class="sp">123</span>
+</p>
+
+<p>
+    <span class="sp">456</span>
+</p>
+<span class="sp"></span>
+<script>
+    var doms = document.querySelectorAll('#dv');
+    doms = document.querySelectorAll('p');
+    doms = document.querySelectorAll('.sp');
+    doms = document.querySelectorAll('#dv,p,sp');
+//    console.log(doms);
+    function select(selector, context) {
+        var ret = [];
+        var doms;
+        var els = [];
+        var i;
+
+        if (context.nodeType && context.nodeType === 1) {
+            doms = context.querySelectorAll(selector);
+            ret = Array.prototype.slice.call(doms);
+        }
+        else if (typeof context == 'object' && (context instanceof Array || 'length' in context)) {
+            for (i = 0; i < context.length; i++) {
+                doms = context[i].querySelectorAll(selector);
+                for (var j = 0; j < doms.length; j++) {
+                    ret.push(doms[j]);
+                }
+            }
+        } else {
+            selector = context + ' ' + selector;
+            doms = context.querySelectorAll(selector);
+            ret = Array.prototype.slice.call(doms);
+        }
+        return ret;
+    }
+
+    doms = select('.sp', document.getElementById('pp'));
+    console.log(doms);
+
+</script>
+</body>
+</html>

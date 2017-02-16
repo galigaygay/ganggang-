@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function getType(obj) {
+        if (obj == null) {
+            return obj + '';  ///obj为空的
+        }
+        if (obj !== 'object') {
+            return typeof obj;  ///基本数据类型  不为对象，就是基本数据类型
+        }
+        else {
+            return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();   //复杂数据类型转化为  小写表示
+        }
+    }
+    function isLikeArray(obj) {
+
+        //过滤null和undefined值
+        if (obj == null) {
+            return false;
+        }
+        var type = getType(obj);//获取数据类型
+        //过滤 window 函数  真数组
+        if (type === 'array' || type === 'function' || type === 'window') {
+            return false;
+        }
+        var length;
+        length = typeof obj === 'object' && 'length' in obj && obj.length;
+        return length === 0 || typeof length === 'number' && length > 0 && (length - 1) in obj;
+    }
+    console.log(isLikeArray([])); // false
+    console.log(isLikeArray(window));
+    console.log(isLikeArray(function() {}));
+    console.log(isLikeArray({length: "1"})); // false
+    console.log(isLikeArray({length: 6, 4: "name"})); //false
+    console.log(isLikeArray({length: 2, 1: "name", 0: 'age'})); // true
+    console.log(isLikeArray({length: 5, 4: "name"})); // true
+    console.log(isLikeArray(null)); // true
+    console.log(isLikeArray(1)); // true
+    console.log(isLikeArray(undefined));
+</script>
+</body>
+</html>
